@@ -11,17 +11,10 @@ const config: StorybookConfig = {
   viteFinal: async (config) => {
     return {
       ...config,
-      base: './', // ✅ ensures relative paths
+      base: './', // ✅ relative asset paths
       build: {
         ...(config.build || {}),
         assetsDir: 'assets',
-        rollupOptions: {
-          output: {
-            assetFileNames: 'assets/[name]-[hash][extname]',
-            chunkFileNames: 'assets/[name]-[hash].js',
-            entryFileNames: 'assets/[name]-[hash].js',
-          },
-        },
       },
     };
   },
