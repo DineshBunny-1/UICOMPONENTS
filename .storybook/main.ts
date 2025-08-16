@@ -9,8 +9,21 @@ const config: StorybookConfig = {
     "@storybook/addon-interactions",
   ],
   viteFinal: async (config) => {
-    config.base = './'; // ✅ fixes asset path issue
-    return config;
+    return {
+      ...config,
+      base: './', // ✅ ensures relative paths
+      build: {
+        ...(config.build || {}),
+        assetsDir: 'assets',
+        rollupOptions: {
+          output: {
+            assetFileNames: 'assets/[name]-[hash][extname]',
+            chunkFileNames: 'assets/[name]-[hash].js',
+            entryFileNames: 'assets/[name]-[hash].js',
+          },
+        },
+      },
+    };
   },
 };
 
