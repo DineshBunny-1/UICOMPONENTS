@@ -1,10 +1,11 @@
 import type { StorybookConfig } from "@storybook/react-vite";
+import { mergeConfig } from 'vite';
 
 const config: StorybookConfig = {
   stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials", // This is the crucial one!
+    "@storybook/addon-essentials",
     "@storybook/addon-onboarding",
     "@storybook/addon-interactions",
   ],
@@ -14,6 +15,12 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: "tag",
+  },
+  // This viteFinal function fixes asset paths for deployment
+  async viteFinal(config) {
+    return mergeConfig(config, {
+      base: './',
+    });
   },
 };
 export default config;
